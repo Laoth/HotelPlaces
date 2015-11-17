@@ -7,9 +7,6 @@ import android.widget.TextView;
 
 import com.example.gus.places.R;
 
-/**
- * Created by Laotshi on 11/14/15.
- */
 public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public final ImageView mImageView;
@@ -24,8 +21,10 @@ public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnC
         mTextView = (TextView) itemView.findViewById(R.id.item_layout_textView);
         mListenerClick = listenerClick;
 
-        mImageView.setOnClickListener(this);
-        mTextView.setOnClickListener(this);
+        //mImageView.setOnClickListener(this);
+        //mTextView.setOnClickListener(this);
+        itemView.setSelected(true);
+        itemView.setOnClickListener(this);
     }
 
     public void setPosition(int position){

@@ -10,17 +10,17 @@
         android:id="@+id/fragment_detail_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:text="Testing"
         android:textAlignment="center"
-        android:text="Testing"/>
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/fragment_detail_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="Testing2"/>
+        android:text="Testing2"
+        android:textSize="15sp" />
 
     <ImageView
         android:id="@+id/fragment_detail_picture"

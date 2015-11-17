@@ -1,5 +1,7 @@
 package com.example.gus.places.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -74,7 +76,10 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null){
             Log.e(TAG,"saveInstanceState != null");
             mPlaceParcelable = savedInstanceState.getParcelable("list");
-            mListItems = mPlaceParcelable.writeFromParcel();
+            if (mPlaceParcelable != null){
+                mListItems = mPlaceParcelable.writeFromParcel();
+            }
+
             mCurrentCountryName = savedInstanceState.getString("countryName");
 
         }else{
@@ -93,10 +98,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null){
             setCurrentLocation();
-        }else{
-            mAutoComplete.setSelected(false);
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Utils.hideKeyboard(MainActivity.this);
     }
 
     private void setCurrentLocation() {
@@ -108,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
      * Use this method to create the ToolBar support
      * and the icon home of the NavigationDrawer
      *
-     * @return void.
+     *
      */
     public void setupDrawerLayout(){
         setSupportActionBar(mToolBar);
@@ -128,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Use this method to setup the progressbar component
      *
-     * @return void.
+     *
      */
     private void setupProgressBar() {
         mProgressBar = (ProgressBar) findViewById(R.id.content_main_progressBar);
@@ -138,12 +147,12 @@ public class MainActivity extends AppCompatActivity {
      * Use this method to setup the AutoCompletTextview
      * and add the action listener and adapter
      *
-     * @return void.
+     *
      */
     private void setupAutoComplete() {
         mAutoComplete = (AutoCompleteTextView) findViewById(R.id.content_main_autoComplete);
         String[] contryList = getResources().getStringArray(R.array.countryList);
-        mAdapterAutoComplete = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,contryList);
+        mAdapterAutoComplete = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,contryList);
         mAutoComplete.setAdapter(mAdapterAutoComplete);
         mAutoComplete.setThreshold(1);
 
@@ -163,13 +172,14 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        mAutoComplete.setSelected(false);
 
     }
 
     /**
      * Use this method to remove the current Fragment
      *
-     * @return void.
+     *
      */
     private void removeFragment(){
         List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
@@ -187,14 +197,14 @@ public class MainActivity extends AppCompatActivity {
      * Use this method to add Adapter to RecyclerView
      * and add Manager to RecyclerView
      *
-     * @return void.
+     *
      */
     public void setupRecyclerView(){
         mRecyclerView = (RecyclerView) findViewById(R.id.content_view_recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (mListItems == null){
-            mListItems = new ArrayList<Item>();
+            mListItems = new ArrayList<>();
         }
 
         mAdapterPlaces = new AdapterPlaces(MainActivity.this, mListItems);
@@ -206,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
      * with Retrofit.
      *
      * @param country that you want the get the hotels.
-     * @return void.
+     *
      */
 
     public void consumeWebService(final String country){
@@ -267,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.URL_PROJECT)));
             return true;
         }
         return super.onOptionsItemSelected(item);

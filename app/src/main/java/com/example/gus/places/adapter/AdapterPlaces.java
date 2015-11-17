@@ -17,9 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by Laotshi on 11/14/15.
- */
+
 public class AdapterPlaces extends RecyclerView.Adapter<PlaceViewHolder> {
 
 
@@ -27,6 +25,7 @@ public class AdapterPlaces extends RecyclerView.Adapter<PlaceViewHolder> {
     private final List<Item> mItemList;
     private final MainActivity mContext;
     private Item mCurrentItem;
+    private DetailFragment mDetailFragment;
 
     public AdapterPlaces(Context context, List<Item> itemList) {
         mItemList = itemList;
@@ -53,18 +52,30 @@ public class AdapterPlaces extends RecyclerView.Adapter<PlaceViewHolder> {
      * Use this method to open the fragment of Detail item
      *
      * @param position is the item position of RecyclerView
-     * @return void.
+     *
      */
     private void openActivityPicture(int position) {
         mCurrentItem = mItemList.get(position);
 
-        DetailFragment fragment = DetailFragment.newInstance(position, mCurrentItem.getCityName());
+        if (mDetailFragment != null){
+            mContext.getSupportFragmentManager().beginTransaction().remove(mDetailFragment);
+        }
+
         FragmentManager fragmentManager = mContext.getSupportFragmentManager();
+
+        if (fragmentManager.getBackStackEntryCount() > 0){
+            fragmentManager.popBackStack();
+        }
+
+        mDetailFragment =  DetailFragment.newInstance(position, mCurrentItem.getCityName());
+
+
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.content_main_frame_container, fragment)
-                .addToBackStack("back")
+                .replace(R.id.content_main_frame_container, mDetailFragment)
+                .addToBackStack(null)
                 .commit();
+
     }
 
 
