@@ -14,11 +14,7 @@ import com.example.gus.places.R;
 import com.squareup.picasso.Picasso;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link DetailFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * It is the fragment for open the detail of the item
  */
 public class DetailFragment extends Fragment {
 
