@@ -7,6 +7,10 @@ import android.widget.TextView;
 
 import com.example.gus.places.R;
 
+/**
+ * It is the vieholder for the adapter of recyclerview
+ */
+
 public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public final ImageView mImageView;
